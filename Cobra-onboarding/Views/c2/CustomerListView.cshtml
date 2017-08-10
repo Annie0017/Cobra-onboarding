@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "CustomerListView";
+}
+<div class="container" ng-app="onboardapp" ng-controller="CustomerCtrl">
+    
+    <h2>CustomerList</h2>
+
+
+
+    <p>{{model | json}}</p>
+    <p>{{hex}}</p>
+    <p>@Html.ActionLink("Create New", "Add")</p>
+    <table class="table">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Address1
+            </th>
+            <th>
+                Address2
+            </th>
+            <th>
+                City
+            </th>
+            <th></th>
+        </tr>
+
+
+        <tr ng-repeat="item in model">
+            <td>
+                {{item.Name}}
+            </td>
+            <td>
+                {{item.Address1}}
+            </td>
+            <td>
+                {{item.Address2}}
+            </td>
+            <td>
+                {{item.City}}
+            </td>
+            <td><a ng-click="deletecus(item)" href="/c2/Edit?id={{item.Id}}">Edit</a>
+            @*<span ng-click="editCus(item)" class="editclick btn btn-primary">Edit</span></td>*@
+
+            @*<td><a @Html.ActionLink("Edit2", "Edit")>{{item.Id}}</a></td>*@
+
+        @*<td><button class="editclick btn btn-primary">Edit</button></td>*@
+       <td> @Html.ActionLink("Delete", "Delete")
+        </td>
+        </tr>
+
+
+    </table>
+</div>
+
