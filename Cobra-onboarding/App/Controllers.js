@@ -12,41 +12,33 @@
         $http.post('/c2/Add/', addc).success(function (data) { $scope.model.people.push(data); });
     };
    
-    $scope.deletecus = function (item){
+    $scope.deleteCus = function (item){
                     
                     var  cusid  =  this.item.Id;
-                    $http.delete('/c2/CustomerList' + cusid).success(function (data)
-                    {
-                            alert("Deleted Successfully!!");
-                            $.each($scope.items, function (i)
-                            {
-                                if ($scope.items[i].Id === cusid)
-                                {
-                                    $scope.items.splice(i, 1);
-                                            return  false;
-                                }
-                            });
-                                                
-                    }).error(function  (data)  {
-                        $scope.error = "An Error has occured while Saving Customer! " + data;
+                    $http.delete('/c2/CustomerList' + cusid).success(function (data) {
+                        alert("Deleted Successfully!!");
+                        $.each($scope.items, function (i) {
+                            if ($scope.items[i].Id === cusid) {
+                                $scope.items.splice(i, 1);
+                                return false;
+                            }
+                        });
 
-                    });
+                    });
     }; 
 
-    $scope.editCus = function () {
-        $http.put('/c2/Edit/emp', editc).success(function (data) { $scope.model.people.emp.Id.push(data); });
-         var editc = {
+    $scope.editCus = function (item) {
+        var cusid = this.item.Id;
+        var editc = {
+            
             'Name': $scope.new.cus.name,
             'Address1': $scope.new.cus.add1,
             'Address2': $scope.new.cus.add2,
             'City': $scope.new.cus.city
          };
-        $http.put('/c2/CustomerList',  editc).success(function  (data)  {
-                        alert("Saved Successfully!!");
-                                               
-        }).error(function  (data)  {
-                        $scope.error  =  "An Error has occured while Saving Friend! "  +  data;
-        });   
+        $http.put('/c2/CustomerList/' + cusid, editc).success(function (data) {
+             alert("Saved Successfully!!");
+         });
     };
 
     $scope.hex = hexafy.myFunc(255); 

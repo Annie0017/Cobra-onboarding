@@ -41,13 +41,13 @@
             <td>
                 {{item.City}}
             </td>
-            <td><a ng-click="deletecus(item)" href="/c2/Edit?id={{item.Id}}">Edit</a>
+            <td><a ng-click="editCus(item)" href="/c2/Edit?id={{item.Id}}">Edit</a>
             @*<span ng-click="editCus(item)" class="editclick btn btn-primary">Edit</span></td>*@
 
             @*<td><a @Html.ActionLink("Edit2", "Edit")>{{item.Id}}</a></td>*@
 
         @*<td><button class="editclick btn btn-primary">Edit</button></td>*@
-       <td> @Html.ActionLink("Delete", "Delete")
+                <a ng-click="deleteCus(item)" href="/c2/Delete?id={{item.Id}}">Edit</a>
         </td>
         </tr>
 
