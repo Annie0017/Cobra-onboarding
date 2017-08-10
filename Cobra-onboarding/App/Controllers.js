@@ -15,7 +15,7 @@
     $scope.deleteCus = function (item){
                     
                     var  cusid  =  this.item.Id;
-                    $http.delete('/c2/CustomerList' + cusid).success(function (data) {
+                    $http.delete('/c2/Delete' + cusid).success(function (data) {
                         alert("Deleted Successfully!!");
                         $.each($scope.items, function (i) {
                             if ($scope.items[i].Id === cusid) {
@@ -36,7 +36,7 @@
             'Address2': $scope.new.cus.add2,
             'City': $scope.new.cus.city
          };
-        $http.put('/c2/CustomerList/' + cusid, editc).success(function (data) {
+        $http.put('/c2/Edit/' + cusid, editc).success(function (data) {
              alert("Saved Successfully!!");
          });
     };
