@@ -28,18 +28,24 @@
     }; 
 
     $scope.editCus = function (item) {
-        var cusid = this.item.Id;
-        var editc = {
-            
+       $scope.cusid = this.item.Id;
+        alert("ID Saved");
+    };
+        $scope.editCu = function () { 
+                var editc = {
+
             'Name': $scope.new.cus.name,
             'Address1': $scope.new.cus.add1,
             'Address2': $scope.new.cus.add2,
             'City': $scope.new.cus.city
-         };
-        $http.put('/c2/Edit/' + cusid, editc).success(function (data) {
-             alert("Saved Successfully!!");
-         });
-    };
+                };
+                alert("going to save data!!");
+                $http.put('/c2/Edit/', editc).success(function (data) {
+                    $scope.model.people.cusid.push(data);
+            alert("Saved Successfully!!");
+            });
+        };
+    
 
     $scope.hex = hexafy.myFunc(255); 
 });
