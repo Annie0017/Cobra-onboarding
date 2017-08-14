@@ -29,14 +29,22 @@ namespace Cobra_onboarding.Controllers
         //Edit
         [HttpGet]
         public ActionResult Edit(int? id)
-        {
-                return View();
+        {                       
+            return View();
         }
 
-        [HttpPut]
+        public ActionResult GetCustomerById(int? id)
+        {
+
+            Entities db = new Entities();
+            Person cus = db.People.Where(a => a.Id == id).FirstOrDefault();
+            return Json(cus,JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public ActionResult Edit(Person person)
         {
-            if ((person.Name.Length > 0))
+         if (person.Name.Length > 0)
             {
                 Entities db = new Entities();
                 var newcus = db.People.Find(person.Id);
@@ -47,6 +55,7 @@ namespace Cobra_onboarding.Controllers
                 db.SaveChanges();
                 return RedirectToAction("CustomerListView", "c2");
             }
+            
             return Json(person, JsonRequestBehavior.AllowGet);
         }
 
@@ -78,24 +87,7 @@ namespace Cobra_onboarding.Controllers
             return Json(person, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
-        public ActionResult Delete()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Delete(Person person)
-        {
-           
-            {
-                Entities db = new Entities();
-                
-                db.SaveChanges();
-                
-            }
-            return Json(person, JsonRequestBehavior.AllowGet);
-        }
+        
     }
 
 }
