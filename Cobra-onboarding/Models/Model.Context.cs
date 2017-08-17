@@ -12,6 +12,8 @@ namespace Cobra_onboarding.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Entities : DbContext
     {
@@ -30,5 +32,14 @@ namespace Cobra_onboarding.Models
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<OnboarddbView> OnboarddbViews { get; set; }
+    
+        public virtual ObjectResult<GetCustomerById_Result> GetCustomerById(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCustomerById_Result>("GetCustomerById", idParameter);
+        }
     }
 }

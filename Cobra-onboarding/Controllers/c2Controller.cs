@@ -10,8 +10,8 @@ namespace Cobra_onboarding.Controllers
     public class c2Controller : Controller
     {
         // GET: c2
-        
-        
+
+        Entities db = new Entities();
         public ActionResult CustomerListView()
         {
             
@@ -29,20 +29,17 @@ namespace Cobra_onboarding.Controllers
         //Edit
         [HttpGet]
         public ActionResult Edit(int? id)
-        {                       
-            return View();
-        }
-
-        public ActionResult GetCustomerById(int? id)
         {
-
             Entities db = new Entities();
             Person cus = db.People.Where(a => a.Id == id).FirstOrDefault();
-            return Json(cus,JsonRequestBehavior.AllowGet);
+            
+            return Json(db, JsonRequestBehavior.AllowGet);
         }
 
+        
+
         [HttpPost]
-        public ActionResult Edit(Person person)
+        public ActionResult Edit(ClassPerson person)
         {
          if (person.Name.Length > 0)
             {
