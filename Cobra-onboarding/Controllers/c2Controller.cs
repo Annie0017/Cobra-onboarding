@@ -27,36 +27,65 @@ namespace Cobra_onboarding.Controllers
 
 
         //Edit
-        [HttpGet]
-        public ActionResult Edit(int? id)
+        
+        //public ActionResult Get(CustomerEntryViewModel person)
+        //{
+        //    Entities db = new Entities();
+        //    var cus = db.People.Find(person.Id);
+
+        //    ////CustomerEntryViewModel model = new CustomerEntryViewModel()
+        //    //{
+
+        //    //    Id = cus.Id,
+        //    //    Add1 = cus.Address1,
+        //    //    Add2 = cus.Address2,
+        //    //    City = cus.City,
+        //    //    Name = cus.Name
+
+        //    //};
+        //    db.SaveChanges();
+        //    return Json(model, JsonRequestBehavior.AllowGet);
+        //}
+
+
+
+[HttpPost]
+        public ActionResult Edit(CustomerEntryViewModel person)
         {
-            Entities db = new Entities();
-            Person cus = db.People.Where(a => a.Id == id).FirstOrDefault();
-            
-            return Json(db, JsonRequestBehavior.AllowGet);
+            if (person.Name.Length > 0)
+            {
+
+                var newcus = db.People.Find(person.Id);
+                
+                    newcus.Name = person.Name;
+                    newcus.Address1 = person.Add1;
+                    newcus.Address2 = person.Add2;
+                    newcus.City = person.City;
+                
+                    db.SaveChanges();
+                
+                    return Json(newcus);
+                
+            }
+            return Json("invalid entry");
         }
 
-        
 
         [HttpPost]
-        public ActionResult Edit(ClassPerson person)
+        public ActionResult Delete(CustomerEntryViewModel item)
         {
-         if (person.Name.Length > 0)
+           
             {
                 Entities db = new Entities();
-                var newcus = db.People.Find(person.Id);
-                newcus.Name = person.Name;
-                newcus.Address1 = person.Address1;
-                newcus.Address2 = person.Address2;
-                newcus.City = person.City;
+                var newcus = db.People.Find(item.Id);
+                db.People.Remove(newcus);
                 db.SaveChanges();
-                return RedirectToAction("CustomerListView", "c2");
-            }
-            
-            return Json(person, JsonRequestBehavior.AllowGet);
-        }
+                return Json(newcus);
 
-        //OrderByDate
+            }
+           
+        }
+       // OrderByDate
         [HttpGet]
         public ActionResult OrderbyDate()
         {

@@ -2,14 +2,17 @@
     ViewBag.Title = "CustomerListView";
 }
 <div class="container" ng-app="onboardapp" ng-controller="CustomerCtrl">
-    
+
     <h2>CustomerList</h2>
 
 
 
     <p>{{model | json}}</p>
     <p>The hexadecimal of 255 is {{hex}}</p>
-    <p>@Html.ActionLink("Create New", "Add")</p>
+    <button type="button"  class="btn btn-primary" data-toggle="modal" data-target="#myAddModal">Add</button>
+    @*<p>@Html.ActionLink("Create New", "Add")</p>*@
+
+
     <table class="table">
         <tr>
             <th>
@@ -41,17 +44,112 @@
             <td>
                 {{item.City}}
             </td>
-            <td><a ng-click="editCus()" href="/c2/Edit/{{item.Id}}">Edit</a>
-            @*<span ng-click="editCus(item)" class="editclick btn btn-primary">Edit</span></td>*@
-
-            @*<td><a @Html.ActionLink("Edit2", "Edit")>{{item.Id}}</a></td>*@
-
-        <td><button class="btn btn-primary" ng-click="deleteCus(item.Id)">Delete</button></td>
-               
-       
+            <td>
+                <!-- Trigger the modal with a button -->
+                <button type="button" ng-click="editCus(item)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Edit{{item.Id}}</button>
+            <td><button type="button" ng-click="deleteCus(item)" class="btn btn-primary" >Delete</button></td>
         </tr>
-
-
     </table>
+
+
+    <div class="container">
+        <br />
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                    <div class=“modal-header”>
+                        <h4 class=“modal-title”>Edit</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" ng-model="cus.name" class="form-control input-lg" placeholder="Customer Name">
+                            </div>
+                            <div class="form-group">
+                                <label>Address1</label>
+                                <input type="text" ng-model="cus.add1" class="form-control input-lg" placeholder="Customer Addr1">
+                            </div>
+                            <div class="form-group">
+                                <label>Address2</label>
+                                <input type="text" ng-model="cus.add2" class="form-control input-lg" placeholder="Customer Addr2">
+                            </div>
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" ng-model="cus.city" class="form-control input-lg" placeholder="Customer City">
+
+                            </div>
+
+                            <p>{{cus}}</p>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" ng-click="editCu(cus)">Save</button>
+                        <button class="btn btn-primary pull-left" data-dismiss="modal">Cancel</button>
+                    </div>
+                    <div>10+20={{10+20}}</div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <br />
+        <!-- Modal -->
+        <div class="modal fade" id="myAddModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                    <div class=“modal-header”>
+                        <h4 class=“modal-title”>Add</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" ng-model="cus.name" class="form-control input-lg" placeholder="Customer Name">
+                            </div>
+                            <div class="form-group">
+                                <label>Address1</label>
+                                <input type="text" ng-model="cus.add1" class="form-control input-lg" placeholder="Customer Addr1">
+                            </div>
+                            <div class="form-group">
+                                <label>Address2</label>
+                                <input type="text" ng-model="cus.add2" class="form-control input-lg" placeholder="Customer Addr2">
+                            </div>
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" ng-model="cus.city" class="form-control input-lg" placeholder="Customer City">
+
+                            </div>
+
+                            <p>{{cus}}</p>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" ng-click="addCus(cus)">Save</button>
+                        <button class="btn btn-primary pull-left" data-dismiss="modal">Cancel</button>
+                    </div>
+                    <div>10+20={{10+20}}</div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+
 

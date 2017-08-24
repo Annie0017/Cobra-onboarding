@@ -192,7 +192,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App\db.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -1105,9 +1104,7 @@
     <Content Include="Views\Shared\_LayoutPage1.cshtml" />
     <Content Include="Views\c2\CustomerListView.cshtml" />
     <Content Include="Scripts\version.json" />
-    <Content Include="Views\c2\Edit.cshtml" />
     <Content Include="Views\c2\OrderbyDate.cshtml" />
-    <Content Include="Views\c2\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

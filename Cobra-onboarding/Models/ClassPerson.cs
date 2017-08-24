@@ -8,17 +8,14 @@ using System.Configuration;
 
 namespace Cobra_onboarding.Models
 {
-      //public void Edit(ClassPerson cus)
-    //{
-    //    SqlConnection com = new SqlConnection(ConfigurationManager.ConnectionStrings["con"].ConnectionString);
-    //}
-    public class ClassPerson
+      
+    public class CustomerEntryViewModel
     {
         
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
+        public string Add1 { get; set; }
+        public string Add2 { get; set; }
         public string City { get; set; }
     }
 }
