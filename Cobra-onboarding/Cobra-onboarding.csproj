@@ -229,6 +229,7 @@
     <Compile Include="Models\OnboarddbView.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderClass.cs" />
     <Compile Include="Models\OrderDetail.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -1105,6 +1106,7 @@
     <Content Include="Views\c2\CustomerListView.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\c2\OrderbyDate.cshtml" />
+    <Content Include="Views\c2\OrderBy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

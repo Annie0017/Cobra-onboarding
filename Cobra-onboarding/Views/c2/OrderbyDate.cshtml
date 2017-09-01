@@ -3,55 +3,151 @@
 @{
     ViewBag.Title = "OrderbyDate";
 }
+<div class="container" ng-app="onboardapp" ng-controller="CustomerCtrl">
+    <h2>OrderbyDate</h2>
 
-<h2>OrderbyDate</h2>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.OrderId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OrderDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th></th>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <!-- Trigger the modal with a button -->
+                    <button type="button" ng-click="editCus(item)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Edit{{item.Id}}</button>
+                <td><button type="button" ng-click="deleteCus(item)" class="btn btn-primary">Delete</button></td>
+            </tr>
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.OrderId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OrderDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    </table>
+    <div class="container">
+        <br />
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
 
-</table>
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                    <div class=“modal-header”>
+                        <h4 class=“modal-title”>Edit</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" ng-model="cus.name" class="form-control input-lg" placeholder="Customer Name">
+                            </div>
+                            <div class="form-group">
+                                <label>Address1</label>
+                                <input type="text" ng-model="cus.add1" class="form-control input-lg" placeholder="Customer Addr1">
+                            </div>
+                            <div class="form-group">
+                                <label>Address2</label>
+                                <input type="text" ng-model="cus.add2" class="form-control input-lg" placeholder="Customer Addr2">
+                            </div>
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" ng-model="cus.city" class="form-control input-lg" placeholder="Customer City">
+
+                            </div>
+
+                            <p>{{cus}}</p>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" ng-click="editCu(cus)">Save</button>
+                        <button class="btn btn-primary pull-left" data-dismiss="modal">Cancel</button>
+                    </div>
+                    <div>10+20={{10+20}}</div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <br />
+        <!-- Modal -->
+        <div class="modal fade" id="myAddModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                    <div class=“modal-header”>
+                        <h4 class=“modal-title”>Add</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" ng-model="cus.name" class="form-control input-lg" placeholder="Customer Name">
+                            </div>
+                            <div class="form-group">
+                                <label>Address1</label>
+                                <input type="text" ng-model="cus.add1" class="form-control input-lg" placeholder="Customer Addr1">
+                            </div>
+                            <div class="form-group">
+                                <label>Address2</label>
+                                <input type="text" ng-model="cus.add2" class="form-control input-lg" placeholder="Customer Addr2">
+                            </div>
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" ng-model="cus.city" class="form-control input-lg" placeholder="Customer City">
+
+                            </div>
+
+                            <p>{{cus}}</p>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" ng-click="addCus(cus)">Save</button>
+                        <button class="btn btn-primary pull-left" data-dismiss="modal">Cancel</button>
+                    </div>
+                    <div>10+20={{10+20}}</div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 ﻿onboardapp.controller('CustomerCtrl',function ($scope, $http, hexafy) {
     
     $http.get('/c2/CustomerList').then(function success(response) { $scope.model = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
+    
     //$scope.new = { cus: {} };
     $scope.addCus = function () {
         var addc = {
@@ -9,9 +10,10 @@
             'Address2': $scope.cus.add2,
             'City': $scope.cus.city
         };
-        $http.post('/c2/Add/', addc);/*.success(function (data) { $http.get('/c2/CustomerList').success(function (response) { $scope.model = response.data; } );*/
-        $http.get('/c2/CustomerList').then(function success(response) { $scope.model = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
-        alert("Added!!");
+        $http.post('/c2/Add/', addc).then(function (response) {
+            $http.get('/c2/CustomerList').then(function success(response) { $scope.model = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
+            alert("Added!!");
+        });
     };
    
     $scope.deleteCus = function (item) {
@@ -58,4 +60,6 @@
     };
     
     $scope.hex = hexafy.myFunc(255); 
+
+    
 });

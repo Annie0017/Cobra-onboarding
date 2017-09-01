@@ -6,12 +6,13 @@
     <title>@ViewBag.Title-Cobra Project</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <script src="~/Scripts/angular.min.js"></script>
+    @*<script src="~/Scripts/angular.min.js"></script>*@
     <script src="~/Scripts/angular.js"></script>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <script src="~/App/onboard-login-app.js"></script>
     <script src="~/App/Controllers.js"></script>
     <script src="~/App/Services.js"></script>
+    <script src="~/App/Directives.js"></script>
 </head>
 <body>
     @Scripts.Render("~/bundles/jquery")
@@ -37,7 +38,7 @@
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                         <li>@Html.ActionLink("CustomerListView", "CustomerListView", "c2")</li>
-                        <li>@Html.ActionLink("OrderbyDate", "OrderbyDate", "c2")</li>
+                        <li>@Html.ActionLink("OrderBy", "OrderBy", "c2")</li>
 
                     </ul>
                     @Html.Partial("_LoginPartial")
