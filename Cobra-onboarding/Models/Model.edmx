@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderId" Type="int" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
         </EntityType>
@@ -17,7 +17,7 @@
           <Key>
             <PropertyRef Name="OrderId" />
           </Key>
-          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderDate" Type="datetime" Nullable="false" />
           <Property Name="PersonId" Type="int" Nullable="false" />
         </EntityType>
@@ -35,7 +35,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductName" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="money" Nullable="false" />
         </EntityType>
@@ -204,8 +204,8 @@ warning 6002: The table/view 'Cobra-onboarding-db.dbo.OnboarddbView' does not ha
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderHeaders_People">
-          <End Role="People" Type="Self.Person" Multiplicity="1" />
-          <End Role="OrderHeaders" Type="Self.OrderHeader" Multiplicity="*" />
+          <End Type="Self.Person" Multiplicity="1" Role="People" />
+          <End Type="Self.OrderHeader" Multiplicity="*" Role="OrderHeaders" />
           <ReferentialConstraint>
             <Principal Role="People">
               <PropertyRef Name="Id" />
@@ -215,7 +215,7 @@ warning 6002: The table/view 'Cobra-onboarding-db.dbo.OnboarddbView' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="false">
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
           <EntitySet Name="OrderHeaders" EntityType="Self.OrderHeader" />
           <EntitySet Name="People" EntityType="Self.Person" />
@@ -230,11 +230,11 @@ warning 6002: The table/view 'Cobra-onboarding-db.dbo.OnboarddbView' does not ha
             <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderHeaders_People" Association="Self.FK_OrderHeaders_People">
-            <End Role="People" EntitySet="People" />
-            <End Role="OrderHeaders" EntitySet="OrderHeaders" />
+            <End EntitySet="People" Role="People" />
+            <End EntitySet="OrderHeaders" Role="OrderHeaders" />
           </AssociationSet>
           <FunctionImport Name="GetCustomerById" ReturnType="Collection(Model.GetCustomerById_Result)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetCustomerById_Result">

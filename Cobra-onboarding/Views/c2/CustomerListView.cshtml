@@ -5,8 +5,7 @@
 
     <h2>CustomerList</h2>
 
-    <div>10+20={{10+20}}</div>       
-    <p>{{model2 | json}}</p>
+    
     <p>The hexadecimal of 255 is {{hex}}</p>
     <button type="button"  class="btn btn-primary" data-toggle="modal" data-target="#myAddModal">Add</button>
     @*<p>@Html.ActionLink("Create New", "Add")</p>*@
@@ -45,7 +44,7 @@
             </td>
             <td>
                 <!-- Trigger the modal with a button -->
-                <button type="button" ng-click="editCus(item)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Edit{{item.Id}}</button>
+                <button type="button" ng-click="editCus(item)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Edit</button>
             <td><button type="button" ng-click="deleteCus(item)" class="btn btn-primary" >Delete</button></td>
         </tr>
     </table>

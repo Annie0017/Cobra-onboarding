@@ -12,7 +12,7 @@
         <EntityTypeShape EntityType="Model.OnboarddbView" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
         <AssociationConnector Association="Model.FK_OrderDetails_OrderHeaders" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_OrderDetails_Products" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_OrderHeaders_People" ManuallyRouted="false" />
+        <AssociationConnector ManuallyRouted="false" Association="Model.FK_OrderHeaders_People" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
