@@ -10,14 +10,11 @@ namespace Cobra_onboarding.Controllers
     public class c2Controller : Controller
     {
         // GET: c2
-
         Entities db = new Entities();
         public ActionResult CustomerListView()
-        {
-            
+        {            
             return View();
-        }
-        
+        }        
         public ActionResult CustomerList()
         {
             Entities db = new Entities();
@@ -36,42 +33,30 @@ namespace Cobra_onboarding.Controllers
             }
             return Json("invalid entry");
         }
-
-
-
         [HttpPost]
         public ActionResult Edit(CustomerEntryViewModel person)
         {
             if (person.Name.Length > 0)
             {
-
-                var newcus = db.People.Find(person.Id);
-                
+                var newcus = db.People.Find(person.Id);                
                     newcus.Name = person.Name;
                     newcus.Address1 = person.Add1;
                     newcus.Address2 = person.Add2;
-                    newcus.City = person.City;
-                
-                    db.SaveChanges();
-                
-                    return Json(newcus);
-                
+                    newcus.City = person.City;                
+                    db.SaveChanges();                
+                    return Json(newcus);                
             }
             return Json("invalid entry");
         }
-
-
         [HttpPost]
         public ActionResult Delete(CustomerEntryViewModel item)
-        {
-           
+        {           
             {
                 Entities db = new Entities();
                 var newcus = db.People.Find(item.Id);
                 db.People.Remove(newcus);
                 db.SaveChanges();
                 return Json(newcus);
-
             }
            
         }
@@ -90,26 +75,20 @@ namespace Cobra_onboarding.Controllers
         {
             Entities db = new Entities();
             db.Configuration.LazyLoadingEnabled = false;
-
             var clist = (from p in db.Products
                          join o in db.OrderDetails on p.Id equals o.ProductId
                          join h in db.OrderHeaders on o.OrderId equals h.OrderId
                          join pp in db.People on h.PersonId equals pp.Id
                          orderby h.OrderDate
-                         select new { h.OrderId, pp, h.OrderDate, p});
-           
-            //var result = from c in clist.AsEnumerable() select new { c.OrderDate.ToString("dd MMM yyy") };
+                         select new { h.OrderId, pp, h.OrderDate, p});                   
             return Json(clist.ToList(), JsonRequestBehavior.AllowGet);
         }
         public ActionResult ProductList()
         {
             Entities db = new Entities();
             db.Configuration.LazyLoadingEnabled = false;
-
-            var plist = (from p in db.Products
-                        
+            var plist = (from p in db.Products                        
                          select new { p.ProductName, p.Price , p.Id});
-
             return Json(plist.ToList(), JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
@@ -119,8 +98,7 @@ namespace Cobra_onboarding.Controllers
             {
                 Entities db = new Entities();
                 int PId = Convert.ToInt16(pid);
-              var newcu1 = db.Products.Find(PId);
-                
+                var newcu1 = db.Products.Find(PId);                
                 return Json(newcu1.Price);
             }
             return Json("invalid entry");
@@ -138,23 +116,19 @@ namespace Cobra_onboarding.Controllers
                 }
                 db.Configuration.LazyLoadingEnabled = false;
                 db.OrderHeaders.Add(newcus);
-                db.SaveChanges();
-               
+                db.SaveChanges();               
                 var newcus4 = new OrderDetail();
                 {                    
                     newcus4.OrderId = newcus.OrderId;
                     newcus4.ProductId = person.Id;
-                }
-                
+                }                
                 db.OrderDetails.Add(newcus4);
                  db.SaveChanges();
 
                 return Json(newcus4);
             }
             return Json("invalid entry");
-        }
-
-       
+        }   
 
         [HttpPost]
         public ActionResult EditOrder (OrderClass person)
@@ -168,23 +142,19 @@ namespace Cobra_onboarding.Controllers
                     newcus.PersonId = person.Name;
                 }
                 db.SaveChanges();
-                var newcus2 = db.OrderDetails.Where(x => x.OrderId == person.OrderId).FirstOrDefault();
-                              
+                var newcus2 = db.OrderDetails.Where(x => x.OrderId == person.OrderId).FirstOrDefault();                              
                 {
-                    //newcus2.OrderId = newcus.OrderId;
+                   
                     newcus2.ProductId = person.Id;
                 }
 
-                db.SaveChanges();
-
-                //return Json(newcus4);
+                db.SaveChanges();               
             }
             return Json("invalid entry");
         }
         [HttpPost]
         public ActionResult OrderDelete(OrderClass item)
         {
-
             {
                 Entities db = new Entities();
                 var newcus2 = db.OrderDetails.Where(x => x.OrderId == item.OrderId).FirstOrDefault();
@@ -192,10 +162,8 @@ namespace Cobra_onboarding.Controllers
                 db.SaveChanges();
                 var newcus = db.OrderHeaders.Find(item.OrderId);
                 db.OrderHeaders.Remove(newcus);
-                db.SaveChanges();
-                
+                db.SaveChanges();                
                 return Json(newcus);
-
             }
 
         }

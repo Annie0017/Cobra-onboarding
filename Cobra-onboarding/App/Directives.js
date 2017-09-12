@@ -1,4 +1,4 @@
-﻿onboardapp.controller('OrderCtrl', function ($scope, $http, hexafy) {
+﻿onboardapp.controller('OrderCtrl', function ($scope, $http) {
     $http.get('/c2/OrderByList/').then(function success(response) {
         console.log(response.data);
         console.log("hi");
@@ -59,12 +59,10 @@
    
     $scope.addOrd = function () {
         debugger;
-        var addc = {
-            
+        var addc = {            
             //'OrderDate': $scope.order.OrderDate,
             'Name': $scope.order.Name,            
-            'Id': $scope.order.Id,
-            //'Price': $scope.order.Price
+            'Id': $scope.order.Id         
         };
         $http.post('/c2/AddOrder/', addc).then(function (response) {
             debugger;
