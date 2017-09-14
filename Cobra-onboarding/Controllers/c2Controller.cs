@@ -10,53 +10,80 @@ namespace Cobra_onboarding.Controllers
     public class c2Controller : Controller
     {
         // GET: c2
-        Entities db = new Entities();
+        private Entities _db = new Entities();
         public ActionResult CustomerListView()
         {            
             return View();
         }        
         public ActionResult CustomerList()
         {
-            Entities db = new Entities();
-            db.Configuration.LazyLoadingEnabled = false;
-            return Json(db.People.ToList(),JsonRequestBehavior.AllowGet);
+
+            _db.Configuration.LazyLoadingEnabled = false;
+            return Json(_db.People.ToList(),JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public ActionResult Add(Person person)
+        public ActionResult Add(CustomerEntryViewModel person)
         {
             if ((person != null))
             {
-                Entities db = new Entities();
-                db.People.Add(person);
-                db.SaveChanges();
-                return Json(person);
+                try {
+                    var newcus = new Person(); {
+                        newcus.Name = person.Name;
+                        newcus.Address1 = person.Add1;
+                        newcus.Address2 = person.Add2;
+                        newcus.City = person.City;
+                         };
+                    _db.People.Add(newcus);
+                    _db.SaveChanges();
+                    return Json(new { success = true, id = newcus.Id });
+                }
+                catch
+                {
+                    return Json(new {success = false, id = 0 });
+                }
             }
-            return Json("invalid entry");
+            return Json(new { success = false, id = 0 });
+           
         }
         [HttpPost]
         public ActionResult Edit(CustomerEntryViewModel person)
         {
             if (person.Name.Length > 0)
             {
-                var newcus = db.People.Find(person.Id);                
+                try
+                {
+                    var newcus = _db.People.Find(person.Id);
                     newcus.Name = person.Name;
                     newcus.Address1 = person.Add1;
                     newcus.Address2 = person.Add2;
-                    newcus.City = person.City;                
-                    db.SaveChanges();                
-                    return Json(newcus);                
+                    newcus.City = person.City;
+                    _db.SaveChanges();
+                    return Json(new { success = true, id = newcus.Id });
+                }
+                catch
+                {
+                    return Json(new { success = false, id = 0 });
+                }
             }
-            return Json("invalid entry");
+            return Json(new { success = false, id = 0 });
+
         }
         [HttpPost]
         public ActionResult Delete(CustomerEntryViewModel item)
         {           
             {
-                Entities db = new Entities();
-                var newcus = db.People.Find(item.Id);
-                db.People.Remove(newcus);
-                db.SaveChanges();
-                return Json(newcus);
+                try
+                {
+                    var newcus = _db.People.Find(item.Id);
+                    _db.People.Remove(newcus);
+                    _db.SaveChanges();
+                    return Json(new { success = true, id = item.Id });
+                }
+                catch
+                {
+                    return Json(new { success = false, id = 0 });
+                }
+                
             }
            
         }
@@ -73,21 +100,21 @@ namespace Cobra_onboarding.Controllers
         }
         public ActionResult OrderByList()
         {
-            Entities db = new Entities();
-            db.Configuration.LazyLoadingEnabled = false;
-            var clist = (from p in db.Products
-                         join o in db.OrderDetails on p.Id equals o.ProductId
-                         join h in db.OrderHeaders on o.OrderId equals h.OrderId
-                         join pp in db.People on h.PersonId equals pp.Id
+
+            _db.Configuration.LazyLoadingEnabled = false;
+            var clist = (from p in _db.Products
+                         join o in _db.OrderDetails on p.Id equals o.ProductId
+                         join h in _db.OrderHeaders on o.OrderId equals h.OrderId
+                         join pp in _db.People on h.PersonId equals pp.Id
                          orderby h.OrderDate
                          select new { h.OrderId, pp, h.OrderDate, p});                   
             return Json(clist.ToList(), JsonRequestBehavior.AllowGet);
         }
         public ActionResult ProductList()
         {
-            Entities db = new Entities();
-            db.Configuration.LazyLoadingEnabled = false;
-            var plist = (from p in db.Products                        
+
+            _db.Configuration.LazyLoadingEnabled = false;
+            var plist = (from p in _db.Products                        
                          select new { p.ProductName, p.Price , p.Id});
             return Json(plist.ToList(), JsonRequestBehavior.AllowGet);
         }
@@ -96,9 +123,9 @@ namespace Cobra_onboarding.Controllers
         {
             if (pid != null)
             {
-                Entities db = new Entities();
+                
                 int PId = Convert.ToInt16(pid);
-                var newcu1 = db.Products.Find(PId);                
+                var newcu1 = _db.Products.Find(PId);                
                 return Json(newcu1.Price);
             }
             return Json("invalid entry");
@@ -108,64 +135,82 @@ namespace Cobra_onboarding.Controllers
         {
             if (person != null)
             {
-                Entities db = new Entities();                
-                var newcus = new OrderHeader();
+                try
                 {
-                    newcus.OrderDate = DateTime.Now;
-                    newcus.PersonId = person.Name;
-                }
-                db.Configuration.LazyLoadingEnabled = false;
-                db.OrderHeaders.Add(newcus);
-                db.SaveChanges();               
-                var newcus4 = new OrderDetail();
-                {                    
-                    newcus4.OrderId = newcus.OrderId;
-                    newcus4.ProductId = person.Id;
-                }                
-                db.OrderDetails.Add(newcus4);
-                 db.SaveChanges();
 
-                return Json(newcus4);
+                    var newcus = new OrderHeader();
+                    {
+                        newcus.OrderDate = DateTime.Now;
+                        newcus.PersonId = person.Name;
+                    }
+                    _db.Configuration.LazyLoadingEnabled = false;
+                    _db.OrderHeaders.Add(newcus);
+                    _db.SaveChanges();
+                    var newcus4 = new OrderDetail();
+                    {
+                        newcus4.OrderId = newcus.OrderId;
+                        newcus4.ProductId = person.Id;
+                    }
+                    _db.OrderDetails.Add(newcus4);
+                    _db.SaveChanges();
+                    return Json(new { success = true, id = newcus.OrderId });
+                }
+                catch
+                {
+                    return Json(new { success = false, id = 0 });
+                }
             }
-            return Json("invalid entry");
-        }   
+            return Json(new { success = false, id = 0 });
+        }
 
         [HttpPost]
-        public ActionResult EditOrder (OrderClass person)
+        public ActionResult EditOrder(OrderClass person)
         {
             if ((person != null))
             {
-                Entities db = new Entities();
-                var newcus = db.OrderHeaders.Find(person.OrderId);
+                try
                 {
-                    newcus.OrderDate = DateTime.Now;
-                    newcus.PersonId = person.Name;
-                }
-                db.SaveChanges();
-                var newcus2 = db.OrderDetails.Where(x => x.OrderId == person.OrderId).FirstOrDefault();                              
-                {
-                   
-                    newcus2.ProductId = person.Id;
-                }
+                    var newcus = _db.OrderHeaders.Find(person.OrderId);
+                    {
+                        newcus.OrderDate = DateTime.Now;
+                        newcus.PersonId = person.Name;
+                    }
+                    _db.SaveChanges();
+                    var newcus2 = _db.OrderDetails.Where(x => x.OrderId == person.OrderId).FirstOrDefault();
+                    {
+                        newcus2.ProductId = person.Id;
+                    }
 
-                db.SaveChanges();               
+                    _db.SaveChanges();
+                    return Json(new { success = true, id = newcus.OrderId });
+                }
+                catch
+                {
+                    return Json(new { success = false, id = 0 });
+                }
             }
-            return Json("invalid entry");
+            return Json(new { success = false, id = 0 });
         }
         [HttpPost]
         public ActionResult OrderDelete(OrderClass item)
         {
             {
-                Entities db = new Entities();
-                var newcus2 = db.OrderDetails.Where(x => x.OrderId == item.OrderId).FirstOrDefault();
-                db.OrderDetails.Remove(newcus2);
-                db.SaveChanges();
-                var newcus = db.OrderHeaders.Find(item.OrderId);
-                db.OrderHeaders.Remove(newcus);
-                db.SaveChanges();                
-                return Json(newcus);
+                try
+                {
+                    var newcus2 = _db.OrderDetails.Where(x => x.OrderId == item.OrderId).FirstOrDefault();
+                    _db.OrderDetails.Remove(newcus2);
+                    _db.SaveChanges();
+                    var newcus = _db.OrderHeaders.Find(item.OrderId);
+                    _db.OrderHeaders.Remove(newcus);
+                    _db.SaveChanges();
+                    return Json(new { success = true, id = item.OrderId });
+                }
+                catch
+                {
+                    return Json(new { success = false, id = 0 });
+                }
             }
-
+          
         }
 
     }

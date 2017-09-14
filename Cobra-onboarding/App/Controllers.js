@@ -6,13 +6,16 @@
     $scope.addCus = function () {
         var addc = {
             'Name': $scope.cus.name,
-            'Address1': $scope.cus.add1,
-            'Address2': $scope.cus.add2,
+            'Add1': $scope.cus.add1,
+            'Add2': $scope.cus.add2,
             'City': $scope.cus.city
         };
+        debugger;
         $http.post('/c2/Add/', addc).then(function (response) {
-            $http.get('/c2/CustomerList').then(function success(response) { $scope.model = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
-            alert("Added!!");
+            $scope.model.push(addc);
+            debugger;
+        //}, function error(response) { $scope.model = "Something went wrong"; });
+        //    alert("Added!!");
         });
     };
    
@@ -23,8 +26,11 @@
             data: item
         }
         alert("going to delete");
-        $http(req).then(function (response) {              
-            $http.get('/c2/CustomerList').then(function success(response) { $scope.model = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
+        $http(req).then(function (response) { 
+            
+            //$http.get('/c2/CustomerList').then(function success(response) {
+            //    $scope.model = response.data;
+            //}, function error(response) { $scope.model = "Something went wrong"; });
             alert("Deleted!!");
         });            
     }; 
@@ -49,11 +55,14 @@
                 alert("going to save");
 
                 $http(req).then(function (response) {
-                    
+                    console.log(response.id);
+                    //$scope.model[Id]=$scope.cus;
                         debugger;
-                        $scope.cus = null;
-                        $http.get('/c2/CustomerList').then(function success(response) { $scope.model = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
-                        alert("Saved Successfully!!");
+                        //$scope.cus = null;
+                        //$http.get('/c2/CustomerList').then(function success(response) {
+                        //    $scope.model = response.data;
+                        //}, function error(response) { $scope.model = "Something went wrong"; });
+                        //alert("Saved Successfully!!");
                     
                 });
                 

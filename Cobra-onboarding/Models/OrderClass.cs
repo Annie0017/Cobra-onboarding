@@ -12,6 +12,8 @@ namespace Cobra_onboarding.Models
         public int Name { get; set; }           
             public int Id { get; set; }
             public decimal Price { get; set; }
-        
+        public int ProductId { get; set; }
+
+
     }
 }

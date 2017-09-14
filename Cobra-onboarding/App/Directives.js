@@ -50,10 +50,10 @@
                 url: '/c2/Prod/',
                 data: { PId: JSON.stringify(order) }
                 
-            }).then(function successCallback(response) {
+              }).then(function successCallback(response) {
 
             $scope.order.Price = response.data;
-        });
+              });
         debugger;
     };
    
@@ -79,8 +79,11 @@
         }
         alert("going to delete");
         $http(req).then(function (response) {
+            debugger;
             $http.get('/c2/OrderByList').then(function success(response) { $scope.model2 = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
+            debugger;
             alert("Deleted!!");
+            debugger;
         });
     }; 
 });
