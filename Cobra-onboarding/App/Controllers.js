@@ -1,52 +1,58 @@
-﻿onboardapp.controller('CustomerCtrl',function ($scope, $http, hexafy) {
-    
+﻿onboardapp.controller('CustomerCtrl', function ($scope, $http, hexafy) {
+    $scope.cus = {}
+    $scope.deleteMessage = "Are you sure you want to delete this record?"
     $http.get('/c2/CustomerList').then(function success(response) { $scope.model = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
-    
-    //$scope.new = { cus: {} };
-    $scope.addCus = function () {
-        var addc = {
-            'Name': $scope.cus.name,
-            'Add1': $scope.cus.add1,
-            'Add2': $scope.cus.add2,
-            'City': $scope.cus.city
-        };
-        debugger;
-        $http.post('/c2/Add/', addc).then(function (response) {
-            $scope.model.push(addc);
-            debugger;
-        //}, function error(response) { $scope.model = "Something went wrong"; });
-        //    alert("Added!!");
-        });
-    };
+        
    
-    $scope.deleteCus = function (item) {
+    $scope.Delete = function (index) {
+        
+        // display the popup asking the user to comfirm they want to delete a record
+        $scope.actionEdit = false;
+        $scope.actionDelete = true;
+        $("#myModal").modal("show");
+        $scope.currentEditId = index;
+        debugger;
+    };
+    $scope.deleteCus = function () {       
         var req = {
             method: 'POST',
             url: '/c2/Delete/',
-            data: item
-        }
-        alert("going to delete");
-        $http(req).then(function (response) { 
+            data: { id: $scope.model[$scope.currentEditId].Id } 
             
-            //$http.get('/c2/CustomerList').then(function success(response) {
-            //    $scope.model = response.data;
-            //}, function error(response) { $scope.model = "Something went wrong"; });
-            alert("Deleted!!");
+        }   
+        
+        $http(req).then(function (response) {  
+            alert("going to delete");
+            if (response.data.success == true) {
+                $scope.model.splice($scope.currentEditId, 1);
+                $("#myModal").modal("hide");
+            }
+             else {
+                    alert("Error Deleting record!!");
+            }            
         });            
     }; 
-    $scope.cus={}
     
-    $scope.editCus = function (customer) {
-        $scope.cus.Id = customer.Id;
-        $scope.cus.name = customer.Name;
-        $scope.cus.add1 = customer.Address1;
-        $scope.cus.add2 = customer.Address2;
-        $scope.cus.city = customer.City;                 
+    
+    $scope.editCus = function (index) {    
+        if (index != -1) {
+            $scope.currentEditId = index;
+            $scope.cus.Id = $scope.model[index].Id;
+            $scope.cus.name = $scope.model[index].Name;
+            $scope.cus.add1 = $scope.model[index].Address1;
+            $scope.cus.add2 = $scope.model[index].Address2;
+            $scope.cus.city = $scope.model[index].City;
+        } 
+        else {
+            $scope.cus.currentEditId = $scope.model.length + 1;
+            $scope.cus.Id = index;
+        }
+            $scope.actionEdit = true;
+            $scope.actionDelete = false;
+            $("#myModal").modal("show");
     }
          
     $scope.editCu = function () {
-        debugger;
-
                 var req = {
                     method: 'POST',
                     url: '/c2/Edit/',
@@ -55,14 +61,25 @@
                 alert("going to save");
 
                 $http(req).then(function (response) {
-                    console.log(response.id);
-                    //$scope.model[Id]=$scope.cus;
-                        debugger;
-                        //$scope.cus = null;
-                        //$http.get('/c2/CustomerList').then(function success(response) {
-                        //    $scope.model = response.data;
-                        //}, function error(response) { $scope.model = "Something went wrong"; });
-                        //alert("Saved Successfully!!");
+                    if (response.data.success == true) {
+                        if (response.data.edit == true) {
+                            $scope.model[$scope.currentEditId].Name = $scope.cus.name;
+                            $scope.model[$scope.currentEditId].Address1 = $scope.cus.add1;
+                            $scope.model[$scope.currentEditId].Address2 = $scope.cus.add2;
+                            $scope.model[$scope.currentEditId].City = $scope.cus.city;
+                        } else {
+                            $scope.model.push({
+                                'Id': response.data.id,
+                                'Name': $scope.cus.name,
+                                'Address1': $scope.cus.add1,
+                                'Address2': $scope.cus.add2,
+                                'City': $scope.cus.city
+                             });
+                        }
+                        $("#myModal").modal("hide");
+                    } else {
+                        alert("Error Save To Database Failed");
+                    }
                     
                 });
                 

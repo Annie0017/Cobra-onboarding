@@ -18,7 +18,7 @@
         $scope.order = {}
         $scope.order.OrderId = customer.OrderId;
         //$scope.order.OrderDate = customer.OrderDate;
-        $scope.order.Name = customer.pp.Id;       
+        $scope.order.Name = customer.pp.Id;
         $scope.order.Id = customer.p.Id;
         $scope.order.Price = customer.p.Price;
     }
@@ -45,24 +45,24 @@
     };
 
     $scope.addPrice = function (order) {
-              $http({
-                method: 'Post',
-                url: '/c2/Prod/',
-                data: { PId: JSON.stringify(order) }
-                
-              }).then(function successCallback(response) {
+        $http({
+            method: 'Post',
+            url: '/c2/Prod/',
+            data: { PId: JSON.stringify(order) }
+
+        }).then(function successCallback(response) {
 
             $scope.order.Price = response.data;
-              });
+        });
         debugger;
     };
-   
+
     $scope.addOrd = function () {
         debugger;
-        var addc = {            
+        var addc = {
             //'OrderDate': $scope.order.OrderDate,
-            'Name': $scope.order.Name,            
-            'Id': $scope.order.Id         
+            'Name': $scope.order.Name,
+            'Id': $scope.order.Id
         };
         $http.post('/c2/AddOrder/', addc).then(function (response) {
             debugger;
@@ -79,11 +79,8 @@
         }
         alert("going to delete");
         $http(req).then(function (response) {
-            debugger;
             $http.get('/c2/OrderByList').then(function success(response) { $scope.model2 = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
-            debugger;
             alert("Deleted!!");
-            debugger;
         });
-    }; 
+    };
 });

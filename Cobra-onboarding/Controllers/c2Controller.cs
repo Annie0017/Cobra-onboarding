@@ -21,44 +21,60 @@ namespace Cobra_onboarding.Controllers
             _db.Configuration.LazyLoadingEnabled = false;
             return Json(_db.People.ToList(),JsonRequestBehavior.AllowGet);
         }
+        //[HttpPost]
+        //public ActionResult Add(CustomerEntryViewModel person)
+        //{
+        //    if ((person != null))
+        //    {
+        //        try {
+        //            var newcus = new Person(); {
+        //                newcus.Name = person.Name;
+        //                newcus.Address1 = person.Add1;
+        //                newcus.Address2 = person.Add2;
+        //                newcus.City = person.City;
+        //                 };
+        //            _db.People.Add(newcus);
+        //            _db.SaveChanges();
+        //            return Json(new { success = true, id = newcus.Id });
+        //        }
+        //        catch
+        //        {
+        //            return Json(new {success = false, id = 0 });
+        //        }
+        //    }
+        //    return Json(new { success = false, id = 0 });
+           
+        //}
         [HttpPost]
-        public ActionResult Add(CustomerEntryViewModel person)
+        public ActionResult Edit(CustomerEntryViewModel person)
         {
-            if ((person != null))
+            if (person != null)
             {
-                try {
-                    var newcus = new Person(); {
+                try
+                {
+                    if (person.Id != -1)
+                    {
+                        var newcus = _db.People.Find(person.Id);
                         newcus.Name = person.Name;
                         newcus.Address1 = person.Add1;
                         newcus.Address2 = person.Add2;
                         newcus.City = person.City;
-                         };
-                    _db.People.Add(newcus);
-                    _db.SaveChanges();
-                    return Json(new { success = true, id = newcus.Id });
-                }
-                catch
-                {
-                    return Json(new {success = false, id = 0 });
-                }
-            }
-            return Json(new { success = false, id = 0 });
-           
-        }
-        [HttpPost]
-        public ActionResult Edit(CustomerEntryViewModel person)
-        {
-            if (person.Name.Length > 0)
-            {
-                try
-                {
-                    var newcus = _db.People.Find(person.Id);
-                    newcus.Name = person.Name;
-                    newcus.Address1 = person.Add1;
-                    newcus.Address2 = person.Add2;
-                    newcus.City = person.City;
-                    _db.SaveChanges();
-                    return Json(new { success = true, id = newcus.Id });
+                        _db.SaveChanges();
+                        return Json(new { success = true, edit = true });
+                    }
+                    else
+                    {
+                        var newcus = new Person();
+                        {
+                            newcus.Name = person.Name;
+                            newcus.Address1 = person.Add1;
+                            newcus.Address2 = person.Add2;
+                            newcus.City = person.City;
+                        };
+                        _db.People.Add(newcus);
+                        _db.SaveChanges();
+                        return Json(new { success = true, id = newcus.Id, edit = false });
+                    }       
                 }
                 catch
                 {
@@ -66,26 +82,22 @@ namespace Cobra_onboarding.Controllers
                 }
             }
             return Json(new { success = false, id = 0 });
-
         }
         [HttpPost]
-        public ActionResult Delete(CustomerEntryViewModel item)
-        {           
-            {
+        public ActionResult Delete(int id)
+        {     
                 try
                 {
-                    var newcus = _db.People.Find(item.Id);
+                    var newcus = _db.People.Find(id);
                     _db.People.Remove(newcus);
                     _db.SaveChanges();
-                    return Json(new { success = true, id = item.Id });
+                    return Json(new { success = true});
                 }
                 catch
                 {
-                    return Json(new { success = false, id = 0 });
-                }
-                
-            }
-           
+                    return Json(new { success = false});
+                }           
+                     
         }
         // OrderByDate
         //[HttpGet]

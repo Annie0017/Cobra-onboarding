@@ -8,7 +8,7 @@
 
     <h2>OrderList</h2>
 
-    
+
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myAddModal">Add</button>
     @*<p>@Html.ActionLink("Create New", "Add")</p>*@
 
@@ -23,7 +23,7 @@
             </th>
             <th>
                 Name
-            </th>            
+            </th>
             <th>
                 Product Name
             </th>
@@ -39,14 +39,14 @@
         <tr ng-repeat="item in model2">
             <td>
                 {{item.OrderId}}
-            </td>            
+            </td>
             <td>
-               {{item.OrderDate|mydate|date:'yyyy-MM-dd HH:mm'}}
+                {{item.OrderDate|mydate|date:'yyyy-MM-dd HH:mm'}}
             </td>
             <td>
                 {{item.pp.Name | uppercase}}
             </td>
-           
+
             <td>
                 {{item.p.ProductName}}
             </td>
@@ -76,14 +76,14 @@
                     <div class="modal-body">
                         <form>
                             @*<div class="form-group">
-                                <label>Date</label>
-                                <input type="text" ng-model="order.OrderDate" class="form-control input-lg" placeholder="OrderDate">
-                            </div>*@
-                           <div class="form-group">
+                                    <label>Date</label>
+                                    <input type="text" ng-model="order.OrderDate" class="form-control input-lg" placeholder="OrderDate">
+                                </div>*@
+                            <div class="form-group">
                                 <label>Name</label>
-                               <select ng-model="order.Name" ng-options="x.Id as x.Name for x in model" class="form-control input-lg"></select>
+                                <select ng-model="order.Name" ng-options="x.Id as x.Name for x in model" class="form-control input-lg"></select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label>ProductName</label>
                                 <select ng-change="addPrice(order.Id)" ng-model="order.Id" ng-options="x.Id as x.ProductName for x in model3" class="form-control input-lg"></select>
@@ -93,16 +93,16 @@
                                 <input type="text" ng-model="order.Price" class="form-control input-lg" placeholder="Price">
                             </div>
 
-                           
+
                         </form>
 
                     </div>
                     <div class="modal-footer">
                         <button type="submit" ng-click="addOrd(order)">Save</button>
-                        
+
                         <button class="btn btn-primary pull-left" data-dismiss="modal">Cancel</button>
                     </div>
-                   
+
                 </div>
 
             </div>
@@ -128,12 +128,12 @@
                                 <input type="text" ng-readonly="true" ng-model="order.OrderId" class="form-control input-lg">
                             </div>
                             @*<div class="form-group">
-                                <label>Date</label>
-                                <input type="text" ng-model="order.OrderDate" class="form-control input-lg" placeholder="OrderDate">
-                            </div>*@
+                                    <label>Date</label>
+                                    <input type="text" ng-model="order.OrderDate" class="form-control input-lg" placeholder="OrderDate">
+                                </div>*@
                             <div class="form-group">
                                 <label>Name</label>
-                                <select ng-model="order.Name" ng-options="x.Id as x.Name for x in model"  class="form-control input-lg"></select>
+                                <select ng-model="order.Name" ng-options="x.Id as x.Name for x in model" class="form-control input-lg"></select>
                             </div>
 
                             <div class="form-group">
@@ -145,7 +145,7 @@
                                 <input type="text" ng-model="order.Price" class="form-control input-lg" placeholder="Price">
                             </div>
 
-                           
+
                         </form>
 
                     </div>
