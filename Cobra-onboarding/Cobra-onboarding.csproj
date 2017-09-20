@@ -223,6 +223,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\newProduct.cs" />
     <Compile Include="Models\OnboarddbView.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

@@ -131,13 +131,23 @@ namespace Cobra_onboarding.Controllers
         }
         [HttpPost]
         public ActionResult Prod(string pid)
-        {
+        {            
             if (pid != null)
             {
-                
-                int PId = Convert.ToInt16(pid);
-                var newcu1 = _db.Products.Find(PId);                
-                return Json(newcu1.Price);
+                try
+                {
+                    int PId = Convert.ToInt16(pid);
+                    var newcu1 = _db.Products.Find(PId);
+                    newProduct newProd = new newProduct()
+                    {
+                        Price = newcu1.Price
+                    };
+                    return Json(newProd);
+                }
+                catch
+                {
+                    return Json(new { success = false });
+                }
             }
             return Json("invalid entry");
         }
@@ -150,8 +160,6 @@ namespace Cobra_onboarding.Controllers
                 {
                     var newcus2 = _db.People.Where(x => x.Id == person.Name).FirstOrDefault();
                     var newcus3 = _db.Products.Where(x => x.Id == person.Id).FirstOrDefault();
-
-
                     var newcus = new OrderHeader();
                     {
                         newcus.OrderDate = DateTime.Now;
@@ -167,7 +175,7 @@ namespace Cobra_onboarding.Controllers
                     }
                     _db.OrderDetails.Add(newcus4);
                     _db.SaveChanges();
-                    _db.Configuration.LazyLoadingEnabled = false;
+                   
                     //var plist = (from p in _db.Products
                     //             join o in _db.OrderDetails on p.Id equals o.ProductId
                     //             join h in _db.OrderHeaders on o.OrderId equals h.OrderId
@@ -176,7 +184,7 @@ namespace Cobra_onboarding.Controllers
                     //             select new { h.OrderId, pp, h.OrderDate, p });
                     //return Json(plist.ToList());
 
-                    return Json(new { success = true, id = newcus.OrderId, date = newcus.OrderDate, Name = newcus2.Name, ProductName = newcus3.ProductName });
+                    return Json(new { success = true/*, id = newcus.OrderId, date = newcus.OrderDate, Name = newcus2.Name, ProductName = newcus3.ProductName*/ });
                 }
                 catch
                 {
@@ -226,7 +234,7 @@ namespace Cobra_onboarding.Controllers
                     var newcus = _db.OrderHeaders.Find(item.OrderId);
                     _db.OrderHeaders.Remove(newcus);
                     _db.SaveChanges();
-                    return Json(new { success = true, id = item.OrderId });
+                    return Json(new { success = true});
                 }
                 catch
                 {
