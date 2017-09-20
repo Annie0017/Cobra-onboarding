@@ -34,14 +34,11 @@
         alert("going to save");
 
         $http(req).then(function (response) {
-
             debugger;
             $scope.order = null;
-            $http.get('/c2/OderByList').then(function success(response) { $scope.model2 = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
+            $http.get('/c2/OrderByList/').then(function success(response)  { $scope.model2 = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
             alert("Saved Successfully!!");
-
         });
-
     };
 
     $scope.addPrice = function (order) {
@@ -49,25 +46,31 @@
             method: 'Post',
             url: '/c2/Prod/',
             data: { PId: JSON.stringify(order) }
-
         }).then(function successCallback(response) {
-
             $scope.order.Price = response.data;
         });
         debugger;
     };
 
-    $scope.addOrd = function () {
-        debugger;
+    $scope.addOrd = function () {         
         var addc = {
-            //'OrderDate': $scope.order.OrderDate,
-            'Name': $scope.order.Name,
-            'Id': $scope.order.Id
-        };
-        $http.post('/c2/AddOrder/', addc).then(function (response) {
-            debugger;
-            $http.get('/c2/OderByList').then(function success(response) { $scope.model2 = response.data; }, function error(response) { $scope.model2 = "Something went wrong"; });
-            alert("Added!!");
+            method: 'Post',
+            url: '/c2/AddOrder/',
+            data: $scope.order
+        }
+        debugger;
+        alert("going to save");       
+        $http(addc).then(function (respon) {
+            //debugger;
+            //if (response.data.success != false) {
+            $http.get('/c2/OrderByList/').then(function success(response) { $scope.model2 = response.data; }, function error(response) { $scope.model2 = "Something went wrong"; });
+                    alert("Added!!");
+            //} else {
+            //    alert("Error no return");
+            //}
+            //debugger;
+            
+            
         });
     };
 

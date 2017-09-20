@@ -112,7 +112,6 @@ namespace Cobra_onboarding.Controllers
         }
         public ActionResult OrderByList()
         {
-
             _db.Configuration.LazyLoadingEnabled = false;
             var clist = (from p in _db.Products
                          join o in _db.OrderDetails on p.Id equals o.ProductId
@@ -149,6 +148,9 @@ namespace Cobra_onboarding.Controllers
             {
                 try
                 {
+                    var newcus2 = _db.People.Where(x => x.Id == person.Name).FirstOrDefault();
+                    var newcus3 = _db.Products.Where(x => x.Id == person.Id).FirstOrDefault();
+
 
                     var newcus = new OrderHeader();
                     {
@@ -165,7 +167,16 @@ namespace Cobra_onboarding.Controllers
                     }
                     _db.OrderDetails.Add(newcus4);
                     _db.SaveChanges();
-                    return Json(new { success = true, id = newcus.OrderId });
+                    _db.Configuration.LazyLoadingEnabled = false;
+                    //var plist = (from p in _db.Products
+                    //             join o in _db.OrderDetails on p.Id equals o.ProductId
+                    //             join h in _db.OrderHeaders on o.OrderId equals h.OrderId
+                    //             join pp in _db.People on h.PersonId equals pp.Id
+                    //             orderby h.OrderDate
+                    //             select new { h.OrderId, pp, h.OrderDate, p });
+                    //return Json(plist.ToList());
+
+                    return Json(new { success = true, id = newcus.OrderId, date = newcus.OrderDate, Name = newcus2.Name, ProductName = newcus3.ProductName });
                 }
                 catch
                 {
