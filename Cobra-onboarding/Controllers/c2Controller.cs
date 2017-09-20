@@ -123,15 +123,15 @@ namespace Cobra_onboarding.Controllers
         }
         public ActionResult ProductList()
         {
-
             _db.Configuration.LazyLoadingEnabled = false;
             var plist = (from p in _db.Products                        
                          select new { p.ProductName, p.Price , p.Id});
             return Json(plist.ToList(), JsonRequestBehavior.AllowGet);
         }
+        
         [HttpPost]
         public ActionResult Prod(string pid)
-        {            
+        {
             if (pid != null)
             {
                 try
@@ -140,9 +140,10 @@ namespace Cobra_onboarding.Controllers
                     var newcu1 = _db.Products.Find(PId);
                     newProduct newProd = new newProduct()
                     {
-                        Price = newcu1.Price
+                        Price = newcu1.Price,
                     };
-                    return Json(newProd);
+
+                    return Json(new { success = true, pc = newProd.Price });
                 }
                 catch
                 {

@@ -40,18 +40,22 @@
             alert("Saved Successfully!!");
         });
     };
-
     $scope.addPrice = function (order) {
         $http({
             method: 'Post',
             url: '/c2/Prod/',
             data: { PId: JSON.stringify(order) }
+
         }).then(function successCallback(response) {
-            $scope.order.Price = response.data;
+            if (response.data.success == false) {
+                alert("Error in getting price");
+            } else {
+                $scope.order.Price = response.data.pc;
+            }
         });
         debugger;
     };
-
+     
     $scope.addOrd = function () {         
         var addc = {
             method: 'Post',
