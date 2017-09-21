@@ -17,10 +17,8 @@
         var req = {
             method: 'POST',
             url: '/c2/Delete/',
-            data: { id: $scope.model[$scope.currentEditId].Id } 
-            
-        }   
-        
+            data: { id: $scope.model[$scope.currentEditId].Id }             
+        }           
         $http(req).then(function (response) {  
             alert("going to delete");
             if (response.data.success == true) {

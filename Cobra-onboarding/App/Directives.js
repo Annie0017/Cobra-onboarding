@@ -35,9 +35,14 @@
 
         $http(req).then(function (response) {
             debugger;
-            $scope.order = null;
-            $http.get('/c2/OrderByList/').then(function success(response)  { $scope.model2 = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
-            alert("Saved Successfully!!");
+            if (response.data.success == true) {
+                $scope.order = null;
+                $http.get('/c2/OrderByList/').then(function success(response) { $scope.model2 = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
+                $("#myModal").modal("hide");
+                alert("Saved Successfully!!");
+            } else {
+                alert("Error in saving data");
+            }
         });
     };
     $scope.addPrice = function (order) {
@@ -65,16 +70,15 @@
         debugger;
         alert("going to save");       
         $http(addc).then(function (respon) {
-            //debugger;
-            //if (response.data.success != false) {
+            debugger;
+            if (response.data.success == true) {
             $http.get('/c2/OrderByList/').then(function success(response) { $scope.model2 = response.data; }, function error(response) { $scope.model2 = "Something went wrong"; });
-                    alert("Added!!");
-            //} else {
-            //    alert("Error no return");
-            //}
-            //debugger;
-            
-            
+             alert("Added!!");
+            } else {
+                alert("Error no return");
+            }
+            $("#myAddModal").modal("hide");
+            debugger;                    
         });
     };
 
@@ -86,8 +90,12 @@
         }
         alert("going to delete");
         $http(req).then(function (response) {
+            if (response.data.success == true) {
             $http.get('/c2/OrderByList').then(function success(response) { $scope.model2 = response.data; }, function error(response) { $scope.model = "Something went wrong"; });
             alert("Deleted!!");
+            } else {
+                alert("Error no return");
+            }
         });
     };
 });
